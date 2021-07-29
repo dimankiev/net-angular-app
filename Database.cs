@@ -109,5 +109,17 @@ namespace OrdersPortal
             IMongoCollection<StockProduct> col = db.GetCollection<StockProduct>("products");
             await col.InsertOneAsync(newProduct);
         }
+
+        public async void DeleteProduct(StockProduct filterData)
+        {
+            MongoClient client = new(connectionString);
+            IMongoDatabase db = client.GetDatabase("crm");
+            IMongoCollection<StockProduct> col = db.GetCollection<StockProduct>("products");
+            ConventionRegistry.Register("IgnoreIfDefault", 
+                new ConventionPack { new IgnoreIfDefaultConvention(true) }, 
+                t => true);
+            BsonDocument filter = filterData.ToBsonDocument();
+            await col.DeleteOneAsync(filter);
+        }
     }
 }

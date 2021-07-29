@@ -27,7 +27,9 @@
         <td>{{ product.size }}</td>
         <td>{{ product.stock }}</td>
         <td>{{ product.price | currency }}</td>
-        <td>Delete</td>
+        <td><a (click)="deleteProduct(product.productId)" class="btn btn-danger">
+          {{ sure[product.productId] < 1 || sure[product.productId] === undefined ? 'Delete' : 'Confirm' }}
+        </a></td>
       </tr>
       </tbody>
     </table>
@@ -67,8 +69,8 @@
       >
     </div>
     <div class="mb-3">
-      <label for="quantity" class="form-label">Product Quantity</label>
-      <input type="number" formControlName="quantity" class="form-control" id="quantity" placeholder="10">
+      <label for="stock" class="form-label">Product Quantity</label>
+      <input type="number" formControlName="stock" class="form-control" id="stock" placeholder="10">
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>

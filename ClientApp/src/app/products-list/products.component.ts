@@ -9,12 +9,13 @@ import { FormBuilder } from '@angular/forms';
 export class ProductsListComponent {
   public products: StockProduct[];
   public isDialogOpened = false;
+  public sure = {};
 
   newProductForm = this.formBuilder.group({
     name: '',
     category: '',
     size: '',
-    quantity: '',
+    stock: '',
     price: '',
     description: ''
   });
@@ -44,6 +45,25 @@ export class ProductsListComponent {
     const result = await response.json();
     alert(result.message);
     this.toggleProductDialog();
+  }
+
+  async deleteProduct(pId: number) {
+    if (this.sure[`${pId}`] !== undefined && this.sure[`${pId}`] < 1) {
+      this.sure[`${pId}`] += 1;
+      return;
+    } else if (this.sure[`${pId}`] === undefined) {
+      this.sure[`${pId}`] = 1;
+      return;
+    }
+    const response = await fetch("https://localhost:5001/api/products/delete", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({productId: pId})
+    });
+    this.fetchProducts();
+    this.sure[`${pId}`] = 0;
   }
 }
 

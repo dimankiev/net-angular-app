@@ -99,7 +99,6 @@ namespace OrdersPortal.Controllers
         {
             PortalResponse res = new PortalResponse();
             StockProduct existingProduct;
-            List<Product> orderProducts = new();
             try
             {
                 List<StockProduct> products = await new Database().GetAllProducts(new StockProduct
@@ -116,6 +115,35 @@ namespace OrdersPortal.Controllers
             newProduct.ProductId = new Random().Next(0, int.MaxValue);
             newProduct.Name = newProduct.Name.Trim();
             new Database().InsertProduct(newProduct);
+            res.Success = true;
+            res.StatusCode = 200;
+            res.Message = "Success";
+            return res;
+        }
+        
+        [HttpPost]
+        [Route("products/delete")]
+        public async Task<PortalResponse> DeleteProduct([FromBody] StockProduct product)
+        {
+            PortalResponse res = new PortalResponse();
+            StockProduct existingProduct;
+            try
+            {
+                List<StockProduct> products = await new Database().GetAllProducts(new StockProduct
+                {
+                    ProductId = product.ProductId
+                });
+                existingProduct = products.Single(el => el.ProductId == product.ProductId);
+            }
+            catch
+            {
+                res.Success = false;
+                res.StatusCode = 404;
+                res.Message = "ProductDoesNotExist";
+                return res;
+            }
+            
+            new Database().DeleteProduct(product);
             res.Success = true;
             res.StatusCode = 200;
             res.Message = "Success";

@@ -1,0 +1,31 @@
+<h1 id="tableLabel">Products List</h1>
+
+<p>See the products list, which are added to the shop.</p>
+
+<p *ngIf="!products; else isLoaded"><em>Loading...</em></p>
+
+<ng-template #isLoaded>
+  <table class='table table-striped' aria-labelledby="tableLabel">
+    <thead>
+    <tr>
+      <th>Product Id</th>
+      <th>Product Name</th>
+      <th>Product Category</th>
+      <th>Product Size</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.productId }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.category }}</td>
+      <td>{{ product.size }}</td>
+      <td>{{ product.stock }}</td>
+      <td>{{ product.price | currency }}</td>
+      <td>Delete</td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>

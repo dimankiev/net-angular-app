@@ -1,26 +1,50 @@
-<h1 id="tableLabel">Customers List</h1>
+<div *ngIf="!isDialogOpened; else showDialog">
+  <div>
+    <h1 id="tableLabel">Customers List</h1>
 
-<p>See the list of customers, who is registered in the shop.</p>
+    <p>See the list of customers, who is registered in the shop.</p>
+    <button class="btn btn-secondary m-2" type="button" (click)="toggleCustomerDialog()">Add New Customer</button>
+  </div>
 
-<p *ngIf="!customerList; else isLoaded"><em>Loading...</em></p>
+  <p *ngIf="!customerList; else showTable"><em>Loading...</em></p>
 
-<ng-template #isLoaded>
-  <table class='table table-striped' aria-labelledby="tableLabel">
-    <thead>
-    <tr>
-      <th>Customer Id</th>
-      <th>Customer Name</th>
-      <th>Orders Total Cost</th>
-      <th>Orders Total Count</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let customerEntry of customerList">
-      <td>{{ customerEntry.name }}</td>
-      <td>{{ customerEntry.address }}</td>
-      <td>{{ customerEntry.totalCost | currency }}</td>
-      <td>{{ customerEntry.totalOrders }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <ng-template #showTable>
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+      <tr>
+        <th>Customer Id</th>
+        <th>Customer Name</th>
+        <th>Orders Total Cost</th>
+        <th>Orders Total Count</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customerEntry of customerList">
+        <td>{{ customerEntry.name }}</td>
+        <td>{{ customerEntry.address }}</td>
+        <td>{{ customerEntry.totalCost | currency }}</td>
+        <td>{{ customerEntry.totalOrders }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>
+
+<ng-template #showDialog>
+  <h1>New Customer</h1>
+
+  <p>Use this form to register new customers in the shop.</p>
+
+  <form [formGroup]="newCustomerForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Customer Name</label>
+      <input type="text" formControlName="name" class="form-control" id="name" placeholder="John Doe">
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">Customer Address</label>
+      <textarea class="form-control" formControlName="address" id="address" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary m-2" type="submit">Save</button>
+    <button class="btn btn-secondary m-2" type="button" (click)="toggleCustomerDialog()">Cancel</button>
+  </form>
 </ng-template>

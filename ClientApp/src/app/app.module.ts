@@ -6,8 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { OrdersComponent } from './orders-list/orders.component';
 import { ProductsListComponent } from "./products-list/products.component";
 import { CustomersListComponent } from "./customers-list/customers.component";
@@ -16,8 +14,6 @@ import { CustomersListComponent } from "./customers-list/customers.component";
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
     ProductsListComponent,
     OrdersComponent,
     CustomersListComponent

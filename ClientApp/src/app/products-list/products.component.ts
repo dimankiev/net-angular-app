@@ -10,9 +10,10 @@ export class ProductsListComponent {
   public products: StockProduct[];
   public isDialogOpened = false;
 
-  checkoutForm = this.formBuilder.group({
+  newProductForm = this.formBuilder.group({
     name: '',
     category: '',
+    size: '',
     quantity: '',
     price: '',
     description: ''
@@ -30,15 +31,15 @@ export class ProductsListComponent {
   toggleProductDialog() {
     this.fetchProducts();
     this.isDialogOpened = !this.isDialogOpened;
-    this.checkoutForm.reset();
+    this.newProductForm.reset();
   }
   async onSubmit(): Promise<void> {
     const response = await fetch("https://localhost:5001/api/products/add", {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.checkoutForm.value) // body data type must match "Content-Type" header
+      body: JSON.stringify(this.newProductForm.value)
     });
     const result = await response.json();
     alert(result.message);

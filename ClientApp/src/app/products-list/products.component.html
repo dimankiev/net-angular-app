@@ -1,31 +1,70 @@
-<h1 id="tableLabel">Products List</h1>
+<div *ngIf="!isDialogOpened; else showDialog">
+  <div>
+    <h1 id="tableLabel">Products List</h1>
+    <p>See the products list, which are added to the shop.</p>
+    <button class="btn btn-secondary m-2" type="button" (click)="toggleProductDialog()">Add New Product</button>
+  </div>
 
-<p>See the products list, which are added to the shop.</p>
+  <p *ngIf="!products; else showTable"><em>Loading...</em></p>
 
-<p *ngIf="!products; else isLoaded"><em>Loading...</em></p>
+  <ng-template #showTable>
+    <table class='table table-striped' aria-labelledby="tableLabel">
+      <thead>
+      <tr>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Product Category</th>
+        <th>Product Size</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.productId }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.size }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>Delete</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-template>
+</div>
 
-<ng-template #isLoaded>
-  <table class='table table-striped' aria-labelledby="tableLabel">
-    <thead>
-    <tr>
-      <th>Product Id</th>
-      <th>Product Name</th>
-      <th>Product Category</th>
-      <th>Product Size</th>
-      <th>Quantity</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let product of products">
-      <td>{{ product.productId }}</td>
-      <td>{{ product.name }}</td>
-      <td>{{ product.category }}</td>
-      <td>{{ product.size }}</td>
-      <td>{{ product.stock }}</td>
-      <td>{{ product.price | currency }}</td>
-      <td>Delete</td>
-    </tr>
-    </tbody>
-  </table>
+<ng-template #showDialog>
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Product Name</label>
+      <input type="text" formControlName="name" class="form-control" id="name" placeholder="Awesome Product">
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Product Category</label>
+      <input type="text" placeholder="Goods" class="form-control dropdown-toggle"
+             id="category" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+             formControlName="category"
+      />
+      <div class="dropdown-menu" aria-labelledby="category" *ngFor="let product of products">
+        <a class="dropdown-item" href="#">{{ product.category }}</a>
+      </div>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text">$</span>
+      <input type="number" placeholder="Price" class="form-control"
+             formControlName="price" aria-label="Product price" id="price"
+      >
+    </div>
+    <div class="mb-3">
+      <label for="quantity" class="form-label">Product Quantity</label>
+      <input type="number" formControlName="quantity" class="form-control" id="quantity" placeholder="10">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary m-2" type="submit">Save</button>
+    <button class="btn btn-secondary m-2" type="button" (click)="toggleProductDialog()">Cancel</button>
+  </form>
 </ng-template>

@@ -6,6 +6,6 @@
 #### Tasks table:
 | Task           |Current Status | Finished      | 
 |----------------|---------------|---------------|
-| Orders List    |  in progress  | [x] Display List<br/> [ ] Add New Orders<br/> [ ] Edit Orders
-| Customers List |   finished    | [x] Display List<br/> [x] Add New Customers
-| Products List  |  in progress  | [x] Display List<br/> [x] Add New Product<br/> [x] Delete Product<br/> [ ] View Product
+| Orders List    |  in progress  | <ul><li>[x] Display List</li><li>[ ] Add New Orders</li><li>[ ] Edit Orders</li></ul>
+| Customers List |   finished    | <ul><li>[x] Display List</li><li>[x] Add New Customers</li></ul>
+| Products List  |  in progress  | <ul><li>[x] Display List</li><li>[x] Add New Product</li><li>[x] Delete Product</li><li>[ ] View Product</li></ul>
